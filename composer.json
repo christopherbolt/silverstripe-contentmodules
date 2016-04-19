@@ -14,7 +14,7 @@
         "silverstripe/cms": ">=3.2",
     	"silverstripe/framework": ">=3.2",
 		"silverstripe-australia/gridfieldextensions": "dev-master",
-		"christopherbolt/publishwithme": "dev-master"
+		"christopherbolt/silverstripe-publishwithme": "dev-master"
     },
 	"extra": {
         "installer-name": "contentmodules"
