@@ -2,7 +2,7 @@
     "name": "christopherbolt/silverstripe-contentmodules",
     "type": "silverstripe-module",
     "description": "A framework for flexible content modules.",
-    "homepage": "http://github.com/christopherbolt/contentmodules",
+    "homepage": "https://github.com/christopherbolt/silverstripe-contentmodules",
     "authors": [
         {
             "name": "Chris Bolt",
