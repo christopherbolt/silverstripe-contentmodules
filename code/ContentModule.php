@@ -48,9 +48,7 @@ class ContentModule extends DataObject {
 		if (isset($this->Title)) {
 			return $this->Title;	
 		} else if (isset($this->Name)) {
-			return $this->Name;	
-		} else if (method_exists(array($this, 'Title'))) {
-			return $this->Title();	
+			return $this->Name;
 		} else {
 			return '(No title)';	
 		}
@@ -60,14 +58,14 @@ class ContentModule extends DataObject {
 		$content = '';
 		if (isset($this->Content)) {
 			$content = $this->Content;	
-		} else if (method_exists(array($this, 'Content'))) {
+		} else if (method_exists($this, 'Content')) {
 			$content = $this->Content();	
 		}
 		return DBField::create_field('Text',$content,'Content')->ContextSummary(100);
 	}
 	
 	function TypeLabel() {
-		return $this->config()->get('singular_name');
+		return $this->config()->get('singular_name') ? $this->config()->get('singular_name') : $this->ClassName;
 	}
 	
 	function TemplateNames() {
