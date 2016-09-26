@@ -122,12 +122,10 @@ class ContentModule extends DataObject {
 	public function getClassesForDropdown() {
 		$result = array();
 		
-		
-		
 		if (
 			isset($GLOBALS['_CONTENT_MODULE_PARENT_PAGEID']) && 
-			$page = Page::get()->byId($GLOBALS['_CONTENT_MODULE_PARENT_PAGEID']) &&
-			($allowed_modules = $this->owner->Config()->get('allowed_modules')) && 
+			($page = Page::get()->byId($GLOBALS['_CONTENT_MODULE_PARENT_PAGEID'])) &&
+			($allowed_modules = $page->Config()->get('allowed_modules')) && 
 			is_array($allowed_modules) && count($allowed_modules)
 			) {
 				
