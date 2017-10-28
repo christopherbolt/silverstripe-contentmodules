@@ -84,7 +84,7 @@ class ContentModule extends DataObject {
 		return $this->renderWith($templates);	
 	}
 	
-	function forLoop($pos) {
+	function forLoop($pos=0) {
 		$templates = $this->TemplateNames();
 		return $this->customise(array(
 			'LoopPos' => $pos
@@ -131,7 +131,7 @@ class ContentModule extends DataObject {
 				
 			$controller = Controller::curr();
 			
-			$relationName = $controller->request->param('OtherID');
+			$relationName = $controller->request->param('FieldName');
 						
 			if (isset($allowed_modules[$relationName])) {
 				$classes = $allowed_modules[$relationName];

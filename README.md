@@ -106,7 +106,7 @@ You can restrict what types of content modules can be added to a page, or if you
 
 If you only have the default "Modules" module area or if you have multiple module areas and want to set the same restrictions for all of them:
 ```
-	$allowed_modules = array(
+	private static $allowed_modules = array(
 		'TextModule',
 		'ImageModule',
 		'StaffProfileModule'
@@ -115,7 +115,7 @@ If you only have the default "Modules" module area or if you have multiple modul
 
 If you have multiple module areas you can set restrictions for each one like this:
 ```
-	$allowed_modules = array(
+	private static $allowed_modules = array(
 		'Modules' = array(
 			'TextModule',
 			'StaffProfileModule'
