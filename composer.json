@@ -14,9 +14,12 @@
         "silverstripe/cms": "^3.3",
     	"silverstripe/framework": "^3.3",
 		"symbiote/silverstripe-gridfieldextensions": "1.4.*",
-		"christopherbolt/silverstripe-publishwithme": "dev-master"
+		"christopherbolt/silverstripe-publishwithme": "1.0.x"
     },
 	"extra": {
-        "installer-name": "contentmodules"
+        "installer-name": "contentmodules",
+		"branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }

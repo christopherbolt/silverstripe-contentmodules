@@ -4,6 +4,9 @@ All kinds of different content types can be added and re-ordered on a page. This
 Content Modules will be published and unpublished when the page is published/unpublished, ie. changes to content modules will only be published when the page is published which makes this module fully compatible with Workflow.
 CMS editors can change the content type of a module in a similar why to how you can change the the type of a page in the CMS.
 
+## Requirements ##
+Silverstripe 3.x, see 1.1 branch for 4.x
+
 ## Creating Modules ##
 No content modules are included, you must create your own.
 
@@ -130,5 +133,5 @@ If you have multiple module areas you can set restrictions for each one like thi
 
 ### Installation ###
 ```
-composer require christopherbolt/silverstripe-contentmodules
+composer require christopherbolt/silverstripe-contentmodules 1.0.x
 ```
