@@ -1,6 +1,6 @@
 {
     "name": "christopherbolt/silverstripe-contentmodules",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "description": "A framework for flexible content modules.",
     "homepage": "https://github.com/christopherbolt/silverstripe-contentmodules",
     "authors": [
@@ -10,13 +10,21 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "silverstripe/cms": "^3.3",
-    	"silverstripe/framework": "^3.3",
-		"symbiote/silverstripe-gridfieldextensions": "1.4.*",
-		"christopherbolt/silverstripe-publishwithme": "dev-master"
+        "php": ">=5.6",
+        "silverstripe/cms": "^4.0",
+    	"silverstripe/framework": "^4.0",
+		"symbiote/silverstripe-gridfieldextensions": "^3",
+		//"christopherbolt/silverstripe-publishwithme": "^2"// Use $owns now instead? built into SilverStripe?
     },
 	"extra": {
-        "installer-name": "contentmodules"
-    }
+        "installer-name": "contentmodules",
+		"branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+	"autoload": {
+        "psr-4": {
+            "ChristopherBolt\\ContentModules\\": "src/",
+        }
+    },
 }

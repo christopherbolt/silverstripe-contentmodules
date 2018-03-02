@@ -1,12 +1,24 @@
 <?php
 
+namespace ChristopherBolt\ContentModules;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
+
 class ModularPageExtension extends DataExtension {
 	
 	private static $has_one = array(
-		'Modules' => 'ContentModuleArea',
+		'Modules' => ContentModuleArea::class,
 	);
 	
-	private static $publish_with_me = array(
+	private static $owns = array(
 		'Modules'
 	);
 	
@@ -39,7 +51,7 @@ class ModularPageExtension extends DataExtension {
 			$fields[] = HeaderField::create($relationName.'Header', $title, 2);
 			$fields[] = GridField::create($relationName, $title, $area->Modules(), GridFieldConfig_RecordEditor::create()
 					->addComponent(new GridFieldOrderableRows('SortOrder'))
-					->removeComponentsByType('GridFieldAddNewButton')
+					->removeComponentsByType(GridFieldAddNewButton::class)
 					->addComponent($add = new GridFieldAddNewMultiClass())
 				);
 			if (($allowed_modules = $this->owner->Config()->get('allowed_modules')) && is_array($allowed_modules) && count($allowed_modules)) {
@@ -50,9 +62,9 @@ class ModularPageExtension extends DataExtension {
 				}
 			} else {
 				// Remove the base "ContentModule" from allowed modules.
-				$classes = array_values(ClassInfo::subclassesFor('ContentModule'));
+				$classes = array_values(ClassInfo::subclassesFor(ContentModule::class));
 				sort($classes);
-				if (($key = array_search('ContentModule', $classes)) !== false) {
+				if (($key = array_search(ContentModule::class, $classes)) !== false) {
 					unset($classes[$key]);
 				}
 				$add->setClasses($classes);
@@ -75,7 +87,7 @@ class ModularPageExtension extends DataExtension {
 				if (!$modules->count()) {
 					for ($i=0; $i<count($defaults); $i++) {
 						if (class_exists($defaults[$i]['ClassName'])) {
-							$s = Object::create($defaults[$i]['ClassName']);
+							$s = $defaults[$i]['ClassName']::create();
 							$s->ModuleAreaID = $area->ID;
 							$s->SortOrder = $i;
 							foreach ($defaults[$i]['Properties'] as $k => $v) {
