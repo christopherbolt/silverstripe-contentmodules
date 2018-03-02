@@ -24,7 +24,7 @@
     },
 	"autoload": {
         "psr-4": {
-            "ChristopherBolt\\ContentModules\\": "src/",
+            "ChristopherBolt\\ContentModules\\": "src/"
         }
-    },
+    }
 }
