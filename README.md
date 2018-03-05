@@ -19,6 +19,8 @@ mysite/code/modules/TextModule.php:
 <?php
 
 use ChristopherBolt\ContentModules\ContentModule;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class TextModule extends ContentModule {
 		

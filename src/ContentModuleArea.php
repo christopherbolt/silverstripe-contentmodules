@@ -3,6 +3,7 @@
 namespace ChristopherBolt\ContentModules;
 
 use SilverStripe\ORM\DataObject;
+use ChristopherBolt\PublishWithMe\PublishWithMe;
 use SilverStripe\Versioned\Versioned;
 
 class ContentModuleArea extends DataObject {
@@ -22,7 +23,7 @@ class ContentModuleArea extends DataObject {
 	);
 	
 	private static $extensions = array(
-		//'PublishWithMe',
+		PublishWithMe::class,
     	Versioned::class,
 	);
 	

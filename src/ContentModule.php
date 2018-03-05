@@ -11,6 +11,7 @@ use SilverStripe\Forms\LiteralField;
 use SilverStripe\Core\ClassInfo;
 use ReflectionClass;
 use SilverStripe\Versioned\Versioned;
+use Page;
 
 class ContentModule extends DataObject {
 	
@@ -48,6 +49,10 @@ class ContentModule extends DataObject {
     	Versioned::class,
 	];
 	
+	private static $casting = [
+		'contentPreview' => 'HTMLText'
+	];
+	
 	//private static $parent_relation = 'ModuleArea';
 	
 	function Page() {
@@ -71,7 +76,7 @@ class ContentModule extends DataObject {
 		} else if (method_exists($this, 'Content')) {
 			$content = $this->Content();	
 		}
-		return DBField::create_field('Text',$content,'Content')->ContextSummary(100);
+		return DBField::create_field('HTMLText',$content,'Content')->Summary(20);
 	}
 	
 	function TypeLabel() {
@@ -150,11 +155,11 @@ class ContentModule extends DataObject {
 			}
 			
 		} else {
-			$classes = array_values(ClassInfo::subclassesFor('ContentModule'));
+			$classes = array_values(ClassInfo::subclassesFor(ContentModule::class));
 			sort($classes);
 		}
 
-		$kill_ancestors = array('ContentModule' => true);
+		$kill_ancestors = array(ContentModule::class => true);
 		foreach($classes as $class => $title) {
 			if(!is_string($class)) {
 				$class = $title;
@@ -166,13 +171,13 @@ class ContentModule extends DataObject {
 				$is_abstract = (($reflection = new ReflectionClass($class)) && $reflection->isAbstract());
 			}
 
-			if ($ancestor_to_hide = Config::inst()->get($class, 'hide_ancestor', Config::FIRST_SET)) {
+			if ($ancestor_to_hide = Config::inst()->get($class, 'hide_ancestor'/*, Config::FIRST_SET*/)) {
 				$kill_ancestors[$ancestor_to_hide] = true;
 			}
 
-			if($is_abstract || singleton($class)->canCreate()) {
-				continue;
-			}
+			//if($is_abstract || singleton($class)->canCreate()) {
+				//continue;
+			//}
 
 			$result[$class] = $title;
 		}

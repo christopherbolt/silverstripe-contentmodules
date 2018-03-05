@@ -9,6 +9,7 @@ use SilverStripe\Forms\LiteralField;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
 
@@ -106,7 +107,7 @@ class ModularPageExtension extends DataExtension {
 		parent::onBeforeWrite();
 		$has_one = $this->owner->Config()->get('has_one');
 		foreach ($has_one as $k => $v) {
-			if ($v == 'ContentModuleArea') {
+			if ($v == ContentModuleArea::class) {
 				$idfield = $k.'ID';
 				if (empty($this->owner->$idfield)) {
 					$area = new $v();
@@ -122,7 +123,7 @@ class ModularPageExtension extends DataExtension {
 		parent::onAfterWrite();
 		$has_one = $this->owner->Config()->get('has_one');
 		foreach ($has_one as $k => $v) {
-			if ($v == 'ContentModuleArea') {
+			if ($v == ContentModuleArea::class) {
 				$this->requireDefaultModuleRecords($k);
 			}
 		}
@@ -134,7 +135,7 @@ class ModularPageExtension extends DataExtension {
 		$relations = array();
 		$has_one = $this->owner->config()->get('has_one');
 		foreach ($has_one as $name => $class) {
-			if (is_subclass_of ($class, 	'ContentModuleArea') || $class == 'ContentModuleArea') {
+			if (is_subclass_of ($class, ContentModuleArea::class) || $class == ContentModuleArea::class) {
 				if ($item = $page->obj($name)) {
 					$new = $item->duplicate();
 					$field = $name.'ID';

@@ -13,7 +13,8 @@
         "php": ">=5.6",
         "silverstripe/cms": "^4.0",
     	"silverstripe/framework": "^4.0",
-		"symbiote/silverstripe-gridfieldextensions": "^3"
+		"symbiote/silverstripe-gridfieldextensions": "^3",
+		"christopherbolt/silverstripe-publishwithme": "^2"
     },
 	"extra": {
         "installer-name": "contentmodules",
