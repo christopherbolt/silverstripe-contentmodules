@@ -1,0 +1,4 @@
+mappings:
+  ContentModule: ChristopherBolt\ContentModules\ContentModule
+  ContentModuleArea: ChristopherBolt\ContentModules\ContentModuleArea
+  ModularPageExtension: ChristopherBolt\ContentModules\ModularPageExtension

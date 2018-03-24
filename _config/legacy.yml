@@ -1,0 +1,7 @@
+---
+Name: contentmoduleslegacy
+---
+SilverStripe\ORM\DatabaseAdmin:
+  classname_value_remapping:
+    ContentModule: ChristopherBolt\ContentModules\ContentModule
+    ContentModuleArea: ChristopherBolt\ContentModules\ContentModuleArea

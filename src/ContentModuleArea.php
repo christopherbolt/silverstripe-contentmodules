@@ -1,23 +1,30 @@
 <?php
 
+namespace ChristopherBolt\ContentModules;
+
+use SilverStripe\ORM\DataObject;
+use ChristopherBolt\PublishWithMe\PublishWithMe;
+use SilverStripe\Versioned\Versioned;
+
 class ContentModuleArea extends DataObject {
 	
+	private static $table_name = 'ContentModuleArea';
+	
 	private static $has_many = array(
-		'Modules' => 'ContentModule',
+		'Modules' => ContentModule::class,
 	);
 	
 	private static $search_index = array(
 		'Modules'
 	);
 	
-	private static $publish_with_me = array(
+	private static $owns = array(
 		'Modules'
 	);
 	
 	private static $extensions = array(
-		'DefaultCan',
-		'PublishWithMe',
-    	"Versioned('Stage', 'Live')",
+		PublishWithMe::class,
+    	Versioned::class,
 	);
 	
 	function TemplateNames() {

@@ -1,44 +1,59 @@
 <?php
 
+namespace ChristopherBolt\ContentModules;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Control\Controller;
+use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Core\ClassInfo;
+use ReflectionClass;
+use SilverStripe\Versioned\Versioned;
+use Page;
+
 class ContentModule extends DataObject {
 	
 	//private static $singular_name = 'Content Module';
 	//private static $plural_name = 'Content Modules';
 	
+	private static $table_name = 'ContentModule';
+	
 	private static $default_sort = 'SortOrder ASC';
 		
-	private static $db = array(
+	private static $db = [
 		'SortOrder' => 'Int',
 		'URLSegment' => 'Varchar'
-	);
+	];
 	
-	private static $has_one = array(
-		'ModuleArea' => 'ContentModuleArea',
-	);
+	private static $has_one = [
+		'ModuleArea' => ContentModuleArea::class,
+	];
 		
 	// Summary fields
-  	private static $summary_fields = array(
+  	private static $summary_fields = [
     	'TitleForGridfield',
 		'TypeLabel',
 		'contentPreview'
-  	);
+  	];
 	
-	private static $field_labels = array(
+	private static $field_labels = [
 		'TitleForGridfield' => 'Title',
 		'TypeLabel' => 'Type',
 		'contentPreview' => 'Preview'
-	);
+	];
 	
-	private static $search_index = array(
-	);
+	private static $extensions = [
+		//'PublishWithMe',
+    	Versioned::class,
+	];
 	
-	private static $extensions = array(
-		'DefaultCan',
-		'PublishWithMe',
-    	"Versioned('Stage', 'Live')",
-	);
+	private static $casting = [
+		'contentPreview' => 'HTMLText'
+	];
 	
-	private static $parent_relation = 'ModuleArea';
+	//private static $parent_relation = 'ModuleArea';
 	
 	function Page() {
 		return Controller::curr();
@@ -61,7 +76,7 @@ class ContentModule extends DataObject {
 		} else if (method_exists($this, 'Content')) {
 			$content = $this->Content();	
 		}
-		return DBField::create_field('Text',$content,'Content')->ContextSummary(100);
+		return DBField::create_field('HTMLText',$content,'Content')->Summary(20);
 	}
 	
 	function TypeLabel() {
@@ -111,7 +126,7 @@ class ContentModule extends DataObject {
 			
 			$fields->addFieldToTab('Root.Main', LiteralField::create('ClassNameMessage', '<div class="message">You can add content after saving for the first time.</div>'));
 			
-			Config::inst()->update('ContentModule', 'better_buttons_enabled', false);
+			//Config::inst()->update('ContentModule', 'better_buttons_enabled', false);
 		} else {
 			$fields->addFieldToTab('Root.Settings', DropDownField::create('ClassName', 'Module Type', $this->getClassesForDropdown()));	
 		}
@@ -140,11 +155,11 @@ class ContentModule extends DataObject {
 			}
 			
 		} else {
-			$classes = array_values(ClassInfo::subclassesFor('ContentModule'));
+			$classes = array_values(ClassInfo::subclassesFor(ContentModule::class));
 			sort($classes);
 		}
 
-		$kill_ancestors = array('ContentModule' => true);
+		$kill_ancestors = array(ContentModule::class => true);
 		foreach($classes as $class => $title) {
 			if(!is_string($class)) {
 				$class = $title;
@@ -156,13 +171,13 @@ class ContentModule extends DataObject {
 				$is_abstract = (($reflection = new ReflectionClass($class)) && $reflection->isAbstract());
 			}
 
-			if ($ancestor_to_hide = Config::inst()->get($class, 'hide_ancestor', Config::FIRST_SET)) {
+			if ($ancestor_to_hide = Config::inst()->get($class, 'hide_ancestor'/*, Config::FIRST_SET*/)) {
 				$kill_ancestors[$ancestor_to_hide] = true;
 			}
 
-			if($is_abstract || !singleton($class)->canCreate()) {
-				continue;
-			}
+			//if($is_abstract || singleton($class)->canCreate()) {
+				//continue;
+			//}
 
 			$result[$class] = $title;
 		}
