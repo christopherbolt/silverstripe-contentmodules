@@ -13,7 +13,7 @@
         "php": ">=5.3.2",
         "silverstripe/cms": "^3.3",
     	"silverstripe/framework": "^3.3",
-		"symbiote/silverstripe-gridfieldextensions": "1.4.*",
+		"symbiote/silverstripe-gridfieldextensions": "^2.0",
 		"christopherbolt/silverstripe-publishwithme": "1.0.x"
     },
 	"extra": {
